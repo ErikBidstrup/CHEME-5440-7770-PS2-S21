@@ -11,18 +11,19 @@ function generate_problem_dictionary(path_to_parameters_file::String)::Dict{Stri
         # setup the initial condition array -
         initital_condition_array = [
             0.0 ;   # 1 mRNA
-            0.0 ;   # TODO: gene concentration goes here -
+            0.005 ;   # TODO: gene concentration goes here - in muM
             0.0 ;   # 3 I = we'll fill this in the execute script 
         ]
 
 
         # TODO: calculate the mRNA_degradation_constant 
-        # mRNA_degradation_constant = ....
+        mRNA_degradation_constant = ln(2)/mRNA_half_life_in_min
 
         # TODO: VMAX for transcription -
-        # VMAX = ...
+        VMAX = (transcription_elongation_rate/gene_length_in_nt)*(RNAPII_concentration)
 
         # TODO: Stuff that I'm forgetting?
+        problem_dictionary["inducer_cooperativity_parameter"] = toml_dictionary["inducer_cooperativity_parameter"]
 
         # --- PUT STUFF INTO problem_dictionary ---- 
         problem_dictionary["transcription_time_constant"] = toml_dictionary["transcription_time_constant"]
