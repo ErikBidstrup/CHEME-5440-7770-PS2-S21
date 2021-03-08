@@ -6,12 +6,12 @@ function generate_problem_dictionary(path_to_parameters_file::String)::Dict{Stri
     try
 
         # load the TOML parameters file -
-        toml_dictionary = TOML.parsefile(path_to_parameters_file)
+        toml_dictionary = TOML.parsefile(path_to_parameters_file)["biophysical_constants"]
 
         # setup the initial condition array -
-        initital_condition_array = [
+        initial_condition_array = [
             0.0 ;   # 1 mRNA
-            0.005 ;   # TODO: gene concentration goes here - in muM
+            5.0 ; # TODO: gene concentration goes here - in nM
             0.0 ;   # 3 I = we'll fill this in the execute script 
         ]
 
@@ -34,6 +34,8 @@ function generate_problem_dictionary(path_to_parameters_file::String)::Dict{Stri
         problem_dictionary["ideal_gas_constant_R"] = 0.008314 # kJ/mol-K
         problem_dictionary["temperature_K"] = (273.15+37)
         problem_dictionary["initital_condition_array"] = initital_condition_array
+        problem_dictionary["mRNA_degradation_constant"] = mRNA_degradation_constant
+        problem_dictionary["VMAX"] = VMAX
         
         # return -
         return problem_dictionary
