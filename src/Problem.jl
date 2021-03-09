@@ -17,11 +17,16 @@ function generate_problem_dictionary(path_to_parameters_file::String)::Dict{Stri
 
 
         # TODO: calculate the mRNA_degradation_constant 
-        mRNA_degradation_constant = ln(2)/mRNA_half_life_in_min
+        mRNA_half_life_in_min = toml_dictionary["mRNA_half_life_in_min"]
+        mRNA_degradation_constant = log(2)/mRNA_half_life_in_min
 
         # TODO: VMAX for transcription -
-        VMAX = (transcription_elongation_rate/gene_length_in_nt)*(RNAPII_concentration)
+        transcription_elongation_rate = toml_dictionary["transcription_elongation_rate"]
+        gene_length_in_nt = toml_dictionary["gene_length_in_nt"]
+        RNAPII_concentration = toml_dictionary["RNAPII_concentration"]
 
+        VMAX = (transcription_elongation_rate/gene_length_in_nt)*(RNAPII_concentration)
+        
         # TODO: Stuff that I'm forgetting?
         problem_dictionary["inducer_cooperativity_parameter"] = toml_dictionary["inducer_cooperativity_parameter"]
 
@@ -33,7 +38,7 @@ function generate_problem_dictionary(path_to_parameters_file::String)::Dict{Stri
         problem_dictionary["inducer_dissociation_constant"] = toml_dictionary["inducer_dissociation_constant"]
         problem_dictionary["ideal_gas_constant_R"] = 0.008314 # kJ/mol-K
         problem_dictionary["temperature_K"] = (273.15+37)
-        problem_dictionary["initital_condition_array"] = initital_condition_array
+        problem_dictionary["initial_condition_array"] = initial_condition_array
         problem_dictionary["mRNA_degradation_constant"] = mRNA_degradation_constant
         problem_dictionary["VMAX"] = VMAX
         
